@@ -1,8 +1,13 @@
-// 组件导出
-export * from './components';
+// 导出组件
+export * from './components/button';
 
-// 工具函数导出
-export * from './utils';
+// 导出主题相关
+export * from './components/theme';
+
+// 导出工具函数
+export * from './utils/cn';
+
+// 注意：CSS 文件不能直接导出，需要在使用处导入
 
 // Hooks 导出
 export * from './hooks';
