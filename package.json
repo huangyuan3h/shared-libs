@@ -1,0 +1,26 @@
+{
+  "name": "@it-and-tea/shared-libs",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nx run-many --target=dev --all",
+    "build": "nx run-many --target=build --all",
+    "storybook": "nx run @shared-libs/storybook:dev",
+    "build-storybook": "nx run @shared-libs/storybook:build",
+    "website": "nx run @shared-libs/website:dev",
+    "build-website": "nx run @shared-libs/website:build",
+    "lint": "nx run-many --target=lint --all"
+  },
+  "private": true,
+  "devDependencies": {
+    "@nx/js": "20.5.0",
+    "@nx/storybook": "^20.5.0",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "nx": "20.5.0",
+    "prettier": "^2.6.2",
+    "tslib": "^2.3.0",
+    "typescript": "~5.7.2"
+  }
+}

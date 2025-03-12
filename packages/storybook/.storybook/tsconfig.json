@@ -1,0 +1,16 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "outDir": "",
+    "baseUrl": "../",
+    "rootDir": "../",
+    "paths": {
+      "@shared-libs/ui": ["../../ui/src"],
+      "@shared-libs/tokens": ["../../tokens/src"]
+    }
+  },
+  "include": ["../src/stories/**/*", "*.ts", "*.js"],
+  "exclude": ["../src/stories/**/*.test.ts", "../src/stories/**/*.test.tsx"]
+}
