@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useTheme, ThemeColors, defaultTheme } from './theme-provider';
 
@@ -36,147 +38,164 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
 export interface ThemeCustomizerProps {
   onExport?: (theme: ThemeColors) => void;
   compact?: boolean;
-  initialTheme?: ThemeColors;
 }
 
-export function ThemeCustomizer({
+/**
+ * 主题自定义器组件
+ * 允许用户自定义主题颜色并导出
+ */
+export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
   onExport,
   compact = false,
-  initialTheme = defaultTheme,
-}: ThemeCustomizerProps) {
-  // Try to use ThemeContext, but fallback to local state if not available
-  let contextTheme: {
-    theme: ThemeColors;
-    setTheme: (theme: ThemeColors) => void;
-    resetTheme: () => void;
-  } | null = null;
+}) => {
+  const { theme: currentTheme, setTheme } = useTheme();
+  const initialTheme = currentTheme || defaultTheme;
 
-  try {
-    contextTheme = useTheme();
-  } catch (error) {
-    // ThemeContext not available, will use local state
-  }
-
-  // Local state for when ThemeContext is not available
   const [localTheme, setLocalTheme] = useState<ThemeColors>(initialTheme);
   const [isOpen, setIsOpen] = useState(!compact);
 
-  // Use context if available, otherwise use local state
-  const theme = contextTheme ? contextTheme.theme : localTheme;
-
+  // 处理颜色变化
   const handleColorChange = (key: keyof ThemeColors, value: string) => {
-    if (contextTheme) {
-      contextTheme.setTheme({ ...theme, [key]: value });
-    } else {
-      setLocalTheme({ ...localTheme, [key]: value });
-    }
+    setLocalTheme({
+      ...localTheme,
+      [key]: value,
+    });
   };
 
-  const resetTheme = () => {
-    if (contextTheme) {
-      contextTheme.resetTheme();
-    } else {
-      setLocalTheme(initialTheme);
-    }
-  };
-
+  // 导出主题
   const handleExport = () => {
+    setTheme(localTheme);
     if (onExport) {
-      onExport(theme);
-    } else {
-      const themeString = JSON.stringify(theme, null, 2);
-      navigator.clipboard.writeText(themeString).then(() => {
-        alert('Theme configuration copied to clipboard');
-      });
+      onExport(localTheme);
     }
+  };
+
+  // 重置主题
+  const handleReset = () => {
+    setLocalTheme(initialTheme);
+  };
+
+  // 切换面板展开/折叠
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <div className="p-4 border rounded-lg shadow-sm bg-white">
-      {compact && (
+    <div className="theme-customizer">
+      <div className="theme-customizer-header">
+        <h3 className="theme-customizer-title">主题定制</h3>
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600"
+          className="theme-customizer-toggle"
+          onClick={toggleOpen}
+          aria-expanded={isOpen}
         >
-          {isOpen ? 'Collapse Theme Editor' : 'Expand Theme Editor'}
+          {isOpen ? '折叠' : '展开'}
         </button>
-      )}
+      </div>
 
       {isOpen && (
-        <>
-          <div className="mb-4">
-            <h3 className="mb-2 text-lg font-medium">Theme Customization</h3>
-            <p className="text-sm text-gray-500">
-              Adjust colors to customize component theme
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <h4 className="mb-2 text-sm font-medium">Base Colors</h4>
-              <ColorPicker
-                label="Primary"
-                value={theme.primary}
-                onChange={(value) => handleColorChange('primary', value)}
-              />
-              <ColorPicker
-                label="Secondary"
-                value={theme.secondary}
-                onChange={(value) => handleColorChange('secondary', value)}
-              />
-              <ColorPicker
-                label="Background"
-                value={theme.background}
-                onChange={(value) => handleColorChange('background', value)}
-              />
-              <ColorPicker
-                label="Text"
-                value={theme.text}
-                onChange={(value) => handleColorChange('text', value)}
-              />
+        <div className="theme-customizer-content">
+          <div className="theme-customizer-colors">
+            <div className="theme-customizer-color-group">
+              <h4 className="theme-customizer-subtitle">主要颜色</h4>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="primary-color">主色调</label>
+                <input
+                  id="primary-color"
+                  type="color"
+                  value={localTheme.primary}
+                  onChange={(e) => handleColorChange('primary', e.target.value)}
+                />
+              </div>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="secondary-color">次要色调</label>
+                <input
+                  id="secondary-color"
+                  type="color"
+                  value={localTheme.secondary}
+                  onChange={(e) =>
+                    handleColorChange('secondary', e.target.value)
+                  }
+                />
+              </div>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="accent-color">强调色</label>
+                <input
+                  id="accent-color"
+                  type="color"
+                  value={localTheme.accent}
+                  onChange={(e) => handleColorChange('accent', e.target.value)}
+                />
+              </div>
             </div>
 
-            <div>
-              <h4 className="mb-2 text-sm font-medium">Functional Colors</h4>
-              <ColorPicker
-                label="Destructive"
-                value={theme.destructive}
-                onChange={(value) => handleColorChange('destructive', value)}
-              />
-              <ColorPicker
-                label="Border"
-                value={theme.border}
-                onChange={(value) => handleColorChange('border', value)}
-              />
-              <ColorPicker
-                label="Muted"
-                value={theme.muted}
-                onChange={(value) => handleColorChange('muted', value)}
-              />
-              <ColorPicker
-                label="Accent"
-                value={theme.accent}
-                onChange={(value) => handleColorChange('accent', value)}
-              />
+            <div className="theme-customizer-color-group">
+              <h4 className="theme-customizer-subtitle">背景和文本</h4>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="background-color">背景色</label>
+                <input
+                  id="background-color"
+                  type="color"
+                  value={localTheme.background}
+                  onChange={(e) =>
+                    handleColorChange('background', e.target.value)
+                  }
+                />
+              </div>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="foreground-color">文本色</label>
+                <input
+                  id="foreground-color"
+                  type="color"
+                  value={localTheme.foreground}
+                  onChange={(e) =>
+                    handleColorChange('foreground', e.target.value)
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="theme-customizer-color-group">
+              <h4 className="theme-customizer-subtitle">其他颜色</h4>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="destructive-color">危险色</label>
+                <input
+                  id="destructive-color"
+                  type="color"
+                  value={localTheme.destructive}
+                  onChange={(e) =>
+                    handleColorChange('destructive', e.target.value)
+                  }
+                />
+              </div>
+              <div className="theme-customizer-color-item">
+                <label htmlFor="border-color">边框色</label>
+                <input
+                  id="border-color"
+                  type="color"
+                  value={localTheme.border}
+                  onChange={(e) => handleColorChange('border', e.target.value)}
+                />
+              </div>
             </div>
           </div>
 
-          <div className="flex gap-2 mt-4">
+          <div className="theme-customizer-actions">
             <button
-              onClick={resetTheme}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className="theme-customizer-button theme-customizer-button-reset"
+              onClick={handleReset}
             >
-              Reset
+              重置
             </button>
             <button
+              className="theme-customizer-button theme-customizer-button-export"
               onClick={handleExport}
-              className="px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600"
             >
-              Submit
+              应用主题
             </button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
-}
+};

@@ -60,4 +60,12 @@ declare module '@shared-libs/ui' {
   export const Button: React.ForwardRefExoticComponent<
     ButtonProps & React.RefAttributes<HTMLButtonElement>
   >;
+
+  export function useTheme(): {
+    theme: ThemeColors;
+    setTheme: (theme: ThemeColors) => void;
+    resetTheme: () => void;
+    isDarkMode: boolean;
+    toggleDarkMode: () => void;
+  };
 }

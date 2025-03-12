@@ -4,6 +4,10 @@
 dist
 tmp
 out-tsc
+storybook-static
+.next
+build
+.turbo
 
 # dependencies
 node_modules
