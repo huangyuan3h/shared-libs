@@ -1,7 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useTheme, ThemeColors, defaultTheme } from './theme-provider';
+import {
+  useTheme,
+  ThemeColors,
+  defaultTheme,
+  lightTheme,
+  darkTheme,
+} from './theme-provider';
 
 interface ColorPickerProps {
   label: string;
@@ -44,6 +50,54 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   );
 };
 
+interface RadiusPickerProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  colorKey: string;
+}
+
+const RadiusPicker: React.FC<RadiusPickerProps> = ({
+  label,
+  value,
+  onChange,
+  colorKey,
+}) => {
+  // 从 rem 值中提取数字部分
+  const numericValue = parseFloat(value) || 0.5;
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = parseFloat(e.target.value);
+    onChange(`${newValue}rem`);
+  };
+
+  return (
+    <div className="flex flex-col mb-4">
+      <div className="flex items-center justify-between mb-2">
+        <label htmlFor={`${colorKey}-radius`} className="text-sm font-medium">
+          {label}
+        </label>
+        <span className="text-xs text-muted-foreground">{value}</span>
+      </div>
+      <input
+        id={`${colorKey}-radius`}
+        type="range"
+        min="0"
+        max="2"
+        step="0.125"
+        value={numericValue}
+        onChange={handleSliderChange}
+        className="w-full"
+      />
+      <div className="flex justify-between mt-1">
+        <span className="text-xs text-muted-foreground">0rem</span>
+        <span className="text-xs text-muted-foreground">1rem</span>
+        <span className="text-xs text-muted-foreground">2rem</span>
+      </div>
+    </div>
+  );
+};
+
 export interface ThemeCustomizerProps {
   onExport?: (theme: ThemeColors) => void;
   compact?: boolean;
@@ -68,10 +122,12 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
     setTheme,
     isDarkMode,
     toggleDarkMode,
+    resetTheme,
   } = useTheme();
-  const initialTheme = currentTheme || defaultTheme;
 
-  const [localTheme, setLocalTheme] = useState<ThemeColors>(initialTheme);
+  const [localTheme, setLocalTheme] = useState<ThemeColors>(
+    currentTheme || defaultTheme,
+  );
   const [isOpen, setIsOpen] = useState(!compact);
 
   // Update local theme when current theme changes
@@ -97,7 +153,14 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
 
   // Reset theme
   const handleReset = () => {
-    setLocalTheme(currentTheme || defaultTheme);
+    resetTheme();
+  };
+
+  // Switch between light and dark theme
+  const handleThemeSwitch = (isDark: boolean) => {
+    const baseTheme = isDark ? darkTheme : lightTheme;
+    setLocalTheme(baseTheme);
+    setTheme(baseTheme);
   };
 
   // Toggle panel expand/collapse
@@ -216,6 +279,63 @@ export const ThemeCustomizer: React.FC<ThemeCustomizerProps> = ({
 
       {isOpen && (
         <div className="theme-customizer-content p-4 bg-background border border-t-0 max-h-[80vh] overflow-y-auto">
+          <div className="theme-customizer-theme-switch mb-6">
+            <h4 className="theme-customizer-subtitle text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">
+              Theme Mode
+            </h4>
+            <div className="flex gap-4">
+              <button
+                className={`px-4 py-2 rounded-md text-sm font-medium flex-1 ${
+                  !isDarkMode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground'
+                }`}
+                onClick={() => handleThemeSwitch(false)}
+              >
+                Light
+              </button>
+              <button
+                className={`px-4 py-2 rounded-md text-sm font-medium flex-1 ${
+                  isDarkMode
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground'
+                }`}
+                onClick={() => handleThemeSwitch(true)}
+              >
+                Dark
+              </button>
+            </div>
+          </div>
+
+          <div className="theme-customizer-radius mb-6">
+            <h4 className="theme-customizer-subtitle text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">
+              Border Radius
+            </h4>
+            <RadiusPicker
+              label="Border Radius"
+              value={localTheme.radius}
+              onChange={(value) => handleColorChange('radius', value)}
+              colorKey="radius"
+            />
+            <div className="flex gap-2 mt-2">
+              {['0rem', '0.25rem', '0.5rem', '0.75rem', '1rem'].map(
+                (radius) => (
+                  <button
+                    key={radius}
+                    className={`w-8 h-8 border ${
+                      localTheme.radius === radius
+                        ? 'border-primary bg-primary/10'
+                        : 'border-border'
+                    }`}
+                    style={{ borderRadius: radius }}
+                    onClick={() => handleColorChange('radius', radius)}
+                    aria-label={`Set radius to ${radius}`}
+                  />
+                ),
+              )}
+            </div>
+          </div>
+
           <div className="theme-customizer-colors space-y-6">
             <div className="theme-customizer-color-group">
               <h4 className="theme-customizer-subtitle text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wider">

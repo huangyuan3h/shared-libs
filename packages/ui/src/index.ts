@@ -7,7 +7,7 @@ export * from './components/theme';
 // 导出工具函数
 export * from './utils/cn';
 
-// 注意：CSS 文件不能直接导出，需要在使用处导入
-
-// Hooks 导出
+// 导出 Hooks
 export * from './hooks';
+
+// 注意：CSS 文件不能直接导出，需要在使用处导入

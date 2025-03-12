@@ -1,21 +1,15 @@
 'use client';
 
 import { Button } from '@shared-libs/ui';
-import { useTheme } from '@shared-libs/ui';
 import Link from 'next/link';
 import { LocalThemeCustomizer } from '../components/local-theme-customizer';
 
 export default function Home() {
-  const { isDarkMode, toggleDarkMode } = useTheme();
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-bold">Shared UI Components</h1>
-          <Button onClick={toggleDarkMode} variant="outline">
-            {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
