@@ -1,4 +1,6 @@
 /** @type { import('@storybook/react-vite').StorybookConfig } */
+const path = require('path');
+
 const config = {
   stories: [
     '../src/stories/**/*.mdx',
@@ -21,15 +23,17 @@ const config = {
     disableTelemetry: true,
   },
   viteFinal: async (config) => {
-    // 添加路径别名
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
-      '@shared-libs/ui':
-        '/Users/huangyuan/Projects/shared-libs/packages/ui/src',
+      '@shared-libs/ui': path.resolve(__dirname, '../../ui/src'),
     };
     return config;
   },
+  managerEntries: (entries = []) => [
+    ...entries,
+    require.resolve('./ThemeToolbarAddon'),
+  ],
 };
 
 export default config;

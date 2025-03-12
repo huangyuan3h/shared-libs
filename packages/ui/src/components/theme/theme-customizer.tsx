@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme, ThemeColors } from './theme-provider';
+import { useTheme, ThemeColors, defaultTheme } from './theme-provider';
 
 interface ColorPickerProps {
   label: string;
@@ -7,7 +7,11 @@ interface ColorPickerProps {
   onChange: (value: string) => void;
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ label, value, onChange }) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({
+  label,
+  value,
+  onChange,
+}) => {
   return (
     <div className="flex items-center justify-between mb-2">
       <label className="text-sm font-medium">{label}</label>
@@ -32,24 +36,57 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ label, value, onChange }) => 
 export interface ThemeCustomizerProps {
   onExport?: (theme: ThemeColors) => void;
   compact?: boolean;
+  initialTheme?: ThemeColors;
 }
 
-export function ThemeCustomizer({ onExport, compact = false }: ThemeCustomizerProps) {
-  const { theme, setTheme, resetTheme } = useTheme();
+export function ThemeCustomizer({
+  onExport,
+  compact = false,
+  initialTheme = defaultTheme,
+}: ThemeCustomizerProps) {
+  // Try to use ThemeContext, but fallback to local state if not available
+  let contextTheme: {
+    theme: ThemeColors;
+    setTheme: (theme: ThemeColors) => void;
+    resetTheme: () => void;
+  } | null = null;
+
+  try {
+    contextTheme = useTheme();
+  } catch (error) {
+    // ThemeContext not available, will use local state
+  }
+
+  // Local state for when ThemeContext is not available
+  const [localTheme, setLocalTheme] = useState<ThemeColors>(initialTheme);
   const [isOpen, setIsOpen] = useState(!compact);
 
+  // Use context if available, otherwise use local state
+  const theme = contextTheme ? contextTheme.theme : localTheme;
+
   const handleColorChange = (key: keyof ThemeColors, value: string) => {
-    setTheme({ ...theme, [key]: value });
+    if (contextTheme) {
+      contextTheme.setTheme({ ...theme, [key]: value });
+    } else {
+      setLocalTheme({ ...localTheme, [key]: value });
+    }
+  };
+
+  const resetTheme = () => {
+    if (contextTheme) {
+      contextTheme.resetTheme();
+    } else {
+      setLocalTheme(initialTheme);
+    }
   };
 
   const handleExport = () => {
     if (onExport) {
       onExport(theme);
     } else {
-      // 复制到剪贴板
       const themeString = JSON.stringify(theme, null, 2);
       navigator.clipboard.writeText(themeString).then(() => {
-        alert('主题配置已复制到剪贴板');
+        alert('Theme configuration copied to clipboard');
       });
     }
   };
@@ -61,61 +98,63 @@ export function ThemeCustomizer({ onExport, compact = false }: ThemeCustomizerPr
           onClick={() => setIsOpen(!isOpen)}
           className="w-full px-4 py-2 mb-4 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600"
         >
-          {isOpen ? '收起主题编辑器' : '展开主题编辑器'}
+          {isOpen ? 'Collapse Theme Editor' : 'Expand Theme Editor'}
         </button>
       )}
 
       {isOpen && (
         <>
           <div className="mb-4">
-            <h3 className="mb-2 text-lg font-medium">主题定制</h3>
-            <p className="text-sm text-gray-500">调整颜色以自定义组件主题</p>
+            <h3 className="mb-2 text-lg font-medium">Theme Customization</h3>
+            <p className="text-sm text-gray-500">
+              Adjust colors to customize component theme
+            </p>
           </div>
 
           <div className="space-y-4">
             <div>
-              <h4 className="mb-2 text-sm font-medium">基础颜色</h4>
+              <h4 className="mb-2 text-sm font-medium">Base Colors</h4>
               <ColorPicker
-                label="主色调"
+                label="Primary"
                 value={theme.primary}
                 onChange={(value) => handleColorChange('primary', value)}
               />
               <ColorPicker
-                label="次要色调"
+                label="Secondary"
                 value={theme.secondary}
                 onChange={(value) => handleColorChange('secondary', value)}
               />
               <ColorPicker
-                label="背景色"
+                label="Background"
                 value={theme.background}
                 onChange={(value) => handleColorChange('background', value)}
               />
               <ColorPicker
-                label="文本色"
+                label="Text"
                 value={theme.text}
                 onChange={(value) => handleColorChange('text', value)}
               />
             </div>
 
             <div>
-              <h4 className="mb-2 text-sm font-medium">功能颜色</h4>
+              <h4 className="mb-2 text-sm font-medium">Functional Colors</h4>
               <ColorPicker
-                label="危险色"
+                label="Destructive"
                 value={theme.destructive}
                 onChange={(value) => handleColorChange('destructive', value)}
               />
               <ColorPicker
-                label="边框色"
+                label="Border"
                 value={theme.border}
                 onChange={(value) => handleColorChange('border', value)}
               />
               <ColorPicker
-                label="静音色"
+                label="Muted"
                 value={theme.muted}
                 onChange={(value) => handleColorChange('muted', value)}
               />
               <ColorPicker
-                label="强调色"
+                label="Accent"
                 value={theme.accent}
                 onChange={(value) => handleColorChange('accent', value)}
               />
@@ -127,17 +166,17 @@ export function ThemeCustomizer({ onExport, compact = false }: ThemeCustomizerPr
               onClick={resetTheme}
               className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
             >
-              重置
+              Reset
             </button>
             <button
               onClick={handleExport}
               className="px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600"
             >
-              导出主题
+              Submit
             </button>
           </div>
         </>
       )}
     </div>
   );
-} 
+}
