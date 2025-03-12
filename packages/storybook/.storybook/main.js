@@ -27,8 +27,6 @@ const config = {
       ...(config.resolve.alias || {}),
       '@shared-libs/ui':
         '/Users/huangyuan/Projects/shared-libs/packages/ui/src',
-      '@shared-libs/tokens':
-        '/Users/huangyuan/Projects/shared-libs/packages/tokens/src',
     };
     return config;
   },

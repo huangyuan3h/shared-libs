@@ -1,5 +1,15 @@
-/** @type { import('@storybook/react').Preview } */
+import React from 'react';
 import './tailwind.css';
+import { ThemeProvider } from '@shared-libs/ui';
+
+// 主题装饰器
+const withThemeProvider = (Story: React.ComponentType) => {
+  return (
+    <ThemeProvider>
+      <Story />
+    </ThemeProvider>
+  );
+};
 
 const preview = {
   parameters: {
@@ -18,6 +28,7 @@ const preview = {
       ],
     },
   },
+  decorators: [withThemeProvider],
 };
 
-export default preview;
+export default preview; 
