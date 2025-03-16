@@ -13,6 +13,14 @@ import { Meta } from '@storybook/blocks';
 - [Button](/docs/ui-button--docs) - 多样式按钮组件
 - [Header](/docs/ui-header--docs) - 响应式页面头部组件
 - [Checkbox](/docs/ui-checkbox--docs) - 复选框组件
+- [Avatar](/docs/ui-avatar--docs) - 头像组件
+- [Breadcrumb](/docs/ui-breadcrumb--docs) - 面包屑导航组件
+- [Label](/docs/ui-label--docs) - 表单标签组件
+- [Select](/docs/ui-select--docs) - 下拉选择组件
+- [Skeleton](/docs/ui-skeleton--docs) - 骨架屏加载组件
+- [Switch](/docs/ui-switch--docs) - 开关组件
+- [Textarea](/docs/ui-textarea--docs) - 文本域组件
+- [Toaster](/docs/ui-toaster--docs) - 消息提示组件
 
 ## 设计原则
 
@@ -69,6 +77,30 @@ function CheckboxExample() {
       <label htmlFor="terms" className="text-sm font-medium">
         接受条款和条件
       </label>
+    </div>
+  );
+}
+
+// 头像组件示例
+import { Avatar, AvatarImage, AvatarFallback } from '@shared-libs/ui';
+
+function AvatarExample() {
+  return (
+    <Avatar>
+      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+  );
+}
+
+// 开关组件示例
+import { Switch, Label } from '@shared-libs/ui';
+
+function SwitchExample() {
+  return (
+    <div className="flex items-center space-x-2">
+      <Switch id="airplane-mode" />
+      <Label htmlFor="airplane-mode">飞行模式</Label>
     </div>
   );
 }
