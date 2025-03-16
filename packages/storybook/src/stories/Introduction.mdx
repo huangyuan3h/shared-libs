@@ -11,6 +11,7 @@ import { Meta } from '@storybook/blocks';
 目前，我们提供以下组件：
 
 - [Button](/docs/ui-button--docs) - 多样式按钮组件
+- [Header](/docs/ui-header--docs) - 响应式页面头部组件
 
 ## 设计原则
 
@@ -32,10 +33,29 @@ pnpm add @shared-libs/ui
 ### 使用示例
 
 ```jsx
+// 按钮组件示例
 import { Button } from '@shared-libs/ui';
 
-function MyComponent() {
+function ButtonExample() {
   return <Button variant="primary">点击我</Button>;
+}
+
+// 头部组件示例
+import { Header } from '@shared-libs/ui';
+
+function HeaderExample() {
+  return (
+    <Header
+      leftContent={<div className="font-bold">网站名称</div>}
+      menu={
+        <nav className="flex space-x-4">
+          <a href="#">首页</a>
+          <a href="#">关于</a>
+        </nav>
+      }
+      rightContent={<Button size="sm">登录</Button>}
+    />
+  );
 }
 ```
 

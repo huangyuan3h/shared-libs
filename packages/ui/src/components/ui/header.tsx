@@ -68,15 +68,16 @@ export const Header = React.forwardRef<HTMLElement, HeaderProps>(
       >
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            {/* 左侧内容 */}
-            {leftContent && (
-              <div className="flex items-center">{leftContent}</div>
-            )}
+            {/* 左侧区域：包含左侧内容和菜单 */}
+            <div className="flex items-center">
+              {/* 左侧内容 */}
+              {leftContent && (
+                <div className="flex items-center">{leftContent}</div>
+              )}
 
-            {/* 中间：桌面端菜单 */}
-            {menu && !isMobile && (
-              <div className="flex-1 flex justify-center ml-8">{menu}</div>
-            )}
+              {/* 桌面端菜单：放在左侧内容旁边，保持16px间隔 */}
+              {menu && !isMobile && <div className="ml-4">{menu}</div>}
+            </div>
 
             {/* 右侧：用户信息或其他内容 */}
             <div className="flex items-center gap-4">
