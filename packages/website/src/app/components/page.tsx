@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@shared-libs/ui';
+import { Button, Checkbox } from '@shared-libs/ui';
 import Link from 'next/link';
 
 export default function ComponentsPage() {
@@ -91,6 +91,140 @@ export default function ComponentsPage() {
 <Button asChild>
   <Link href="/some-page">链接按钮</Link>
 </Button>`}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 复选框组件示例 */}
+          <section className="border rounded-lg p-6">
+            <h2 className="text-2xl font-semibold mb-6">复选框 (Checkbox)</h2>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-medium mb-3">基础用法</h3>
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="terms1" />
+                  <label
+                    htmlFor="terms1"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    接受条款和条件
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-3">状态</h3>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="checked" defaultChecked />
+                    <label
+                      htmlFor="checked"
+                      className="text-sm font-medium leading-none"
+                    >
+                      已选中
+                    </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="unchecked" />
+                    <label
+                      htmlFor="unchecked"
+                      className="text-sm font-medium leading-none"
+                    >
+                      未选中
+                    </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="disabled" disabled />
+                    <label
+                      htmlFor="disabled"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      禁用状态
+                    </label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="disabled-checked" disabled defaultChecked />
+                    <label
+                      htmlFor="disabled-checked"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      禁用且选中
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-3">表单示例</h3>
+                <form className="space-y-4">
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-medium">订阅设置</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="email" />
+                        <label
+                          htmlFor="email"
+                          className="text-sm font-medium leading-none"
+                        >
+                          接收电子邮件通知
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="sms" defaultChecked />
+                        <label
+                          htmlFor="sms"
+                          className="text-sm font-medium leading-none"
+                        >
+                          接收短信通知
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Checkbox id="push" />
+                        <label
+                          htmlFor="push"
+                          className="text-sm font-medium leading-none"
+                        >
+                          接收推送通知
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <Button type="submit" size="sm">
+                    保存设置
+                  </Button>
+                </form>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-medium mb-3">用法示例</h3>
+                <div className="p-4 border rounded bg-card text-card-foreground">
+                  <pre className="text-sm">
+                    {`import { Checkbox } from '@shared-libs/ui';
+
+// 基本用法
+<div className="flex items-center space-x-2">
+  <Checkbox id="terms" />
+  <label htmlFor="terms" className="text-sm font-medium">
+    接受条款和条件
+  </label>
+</div>
+
+// 默认选中
+<Checkbox id="checked" defaultChecked />
+
+// 禁用状态
+<Checkbox id="disabled" disabled />
+
+// 禁用且选中
+<Checkbox id="disabled-checked" disabled defaultChecked />
+
+// 监听状态变化
+<Checkbox 
+  id="onChange" 
+  onCheckedChange={(checked) => console.log(checked)} 
+/>`}
                   </pre>
                 </div>
               </div>
