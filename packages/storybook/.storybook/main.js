@@ -27,6 +27,7 @@ const config = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@shared-libs/ui': path.resolve(__dirname, '../../ui/src'),
+      '@': path.resolve(__dirname, '../../ui/src'),
     };
     return config;
   },

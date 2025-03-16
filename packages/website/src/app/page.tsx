@@ -6,11 +6,9 @@ import { LocalThemeCustomizer } from '../components/local-theme-customizer';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold">Shared UI Components</h1>
-        </div>
+    <div className="flex flex-col items-center">
+      <div className="w-full max-w-5xl">
+        <h1 className="text-4xl font-bold mb-8">Shared UI Components</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div>
@@ -18,57 +16,43 @@ export default function Home() {
               This is a website showcasing our shared UI component library. You
               can view and interact with all available components here.
             </p>
-            <div className="flex gap-4">
-              <Button asChild>
-                <Link href="/components">Browse Component Library</Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link
-                  href="https://github.com/yourusername/shared-libs"
-                  target="_blank"
-                >
-                  View on GitHub
-                </Link>
-              </Button>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/components" passHref>
+                <Button>View Components</Button>
+              </Link>
+              <a
+                href="https://github.com/your-org/shared-libs"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="outline">GitHub Repository</Button>
+              </a>
             </div>
           </div>
-          <div>
+          <div className="bg-muted p-6 rounded-lg">
+            <h2 className="text-xl font-semibold mb-4">Theme Customization</h2>
             <LocalThemeCustomizer />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="p-6 border rounded-lg">
-            <h2 className="text-2xl font-semibold mb-4">Button Components</h2>
-            <div className="flex flex-wrap gap-4">
-              <Button variant="default">Default Button</Button>
-              <Button variant="primary">Primary Button</Button>
-              <Button variant="secondary">Secondary Button</Button>
-              <Button variant="destructive">Destructive Button</Button>
-            </div>
+        <div className="border-t border-border pt-8">
+          <h2 className="text-2xl font-bold mb-4">Getting Started</h2>
+          <div className="bg-muted p-4 rounded-md mb-6">
+            <pre className="text-sm overflow-x-auto">
+              <code>npm install @shared-libs/ui</code>
+            </pre>
           </div>
-
-          <div className="p-6 border rounded-lg">
-            <h2 className="text-2xl font-semibold mb-4">Theme Customization</h2>
-            <p className="mb-4">
-              Our component library supports light and dark themes, and can be
-              customized through the ThemeProvider.
-            </p>
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-primary"></div>
-              <div className="w-8 h-8 rounded-full bg-secondary"></div>
-              <div className="w-8 h-8 rounded-full bg-accent"></div>
-              <div className="w-8 h-8 rounded-full bg-destructive"></div>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground">
-            Built with Next.js, TypeScript, Tailwind CSS and shadcn
+          <p className="mb-4">
+            Import components from the library and use them in your React
+            application:
           </p>
+          <div className="bg-muted p-4 rounded-md">
+            <pre className="text-sm overflow-x-auto">
+              <code>{`import { Button } from '@shared-libs/ui';\n\nfunction MyComponent() {\n  return <Button>Click Me</Button>;\n}`}</code>
+            </pre>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

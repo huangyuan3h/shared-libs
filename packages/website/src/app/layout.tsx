@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import ThemeProviderWrapper from '../components/theme-provider-wrapper';
+import { Header } from '../components/header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,7 +20,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProviderWrapper defaultDarkMode={false}>
-          {children}
+          <Header />
+          <main className="container mx-auto px-4 py-8">{children}</main>
         </ThemeProviderWrapper>
       </body>
     </html>
