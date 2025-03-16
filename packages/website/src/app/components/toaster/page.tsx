@@ -1,7 +1,6 @@
 'use client';
 
-import { Button, Toaster } from '@shared-libs/ui';
-import { toast } from 'sonner';
+import { Button, Toaster, toast } from '@shared-libs/ui';
 
 export default function ToasterPage() {
   return (

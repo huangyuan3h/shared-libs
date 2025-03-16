@@ -101,6 +101,7 @@ export default function ComponentsLayout({
 
       {/* 主内容区 */}
       <main className="flex-1 p-8">{children}</main>
+      {/* <Toaster /> */}
     </div>
   );
 }
