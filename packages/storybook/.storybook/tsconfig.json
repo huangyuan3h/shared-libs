@@ -7,10 +7,9 @@
     "baseUrl": "../",
     "rootDir": "../",
     "paths": {
-      "@shared-libs/ui": ["../../ui/src"],
-      "@shared-libs/tokens": ["../../tokens/src"]
+      "@shared-libs/ui": ["../../ui/src"]
     }
   },
-  "include": ["../src/stories/**/*", "*.ts", "*.js"],
+  "include": ["../src/stories/**/*", "*.ts", "*.js", "*.tsx"],
   "exclude": ["../src/stories/**/*.test.ts", "../src/stories/**/*.test.tsx"]
 }

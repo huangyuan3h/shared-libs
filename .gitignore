@@ -4,6 +4,10 @@
 dist
 tmp
 out-tsc
+storybook-static
+.next
+build
+.turbo
 
 # dependencies
 node_modules
@@ -40,3 +44,5 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+
+.cursor/

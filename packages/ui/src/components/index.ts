@@ -1,6 +1,5 @@
-// 这里将导出所有组件
-// 示例: export * from './button';
-// 示例: export * from './card';
+// 导出主题相关组件
+export * from './theme';
 
-// 当添加新组件时，请在此处导出它们
-export * from './button';
+// 导出UI组件
+export * from './ui';

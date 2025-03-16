@@ -124,21 +124,13 @@ shared-libs/
 │   │   └── tsconfig.json          # TypeScript 配置
 │   │
 │   ├── website/                   # 展示网站
-│   │   ├── src/                   # 网站源代码
-│   │   │   ├── app/               # Next.js 应用
-│   │   │   ├── components/        # 网站特定组件
-│   │   │   └── pages/             # 网站页面
-│   │   ├── package.json           # 网站包配置
-│   │   └── tsconfig.json          # TypeScript 配置
-│   │
-│   └── tokens/                    # 设计令牌和主题
-│       ├── src/                   # 设计令牌源代码
-│       │   ├── colors.ts          # 颜色变量
-│       │   ├── typography.ts      # 排版变量
-│       │   ├── spacing.ts         # 间距变量
-│       │   └── index.ts           # 主入口文件
-│       ├── package.json           # 设计令牌包配置
+│       ├── src/                   # 网站源代码
+│       │   ├── app/               # Next.js 应用
+│       │   ├── components/        # 网站特定组件
+│       │   └── pages/             # 网站页面
+│       ├── package.json           # 网站包配置
 │       └── tsconfig.json          # TypeScript 配置
+│
 │
 ├── tools/                         # 构建和开发工具
 │   └── eslint-config/             # 共享 ESLint 配置
@@ -166,16 +158,7 @@ shared-libs/
 
 - **组件**：
   - Button：多样式按钮组件，支持不同的变体和尺寸
-
-### @shared-libs/tokens
-
-设计令牌包，定义了整个设计系统的基础变量。
-
-- **内容**：
-  - 颜色系统
-  - 排版规范
-  - 间距规范
-  - 其他设计变量
+  - Theme：主题系统组件，支持动态切换主题
 
 ### @shared-libs/storybook
 
