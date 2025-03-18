@@ -10,6 +10,7 @@ const componentGroups = [
     items: [
       { name: 'Button', path: '/components/button', label: '按钮' },
       { name: 'Checkbox', path: '/components/checkbox', label: '复选框' },
+      { name: 'Input', path: '/components/input', label: '输入框' },
       { name: 'Label', path: '/components/label', label: '标签' },
       { name: 'Switch', path: '/components/switch', label: '开关' },
       { name: 'Textarea', path: '/components/textarea', label: '文本域' },
