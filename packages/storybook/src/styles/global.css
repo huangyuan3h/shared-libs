@@ -1,0 +1,49 @@
+/* 确保组件在Storybook中正常展示的全局样式 */
+
+:root {
+  --color-primary: #0ea5e9;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f3f4f6;
+  --color-secondary-foreground: #1f2937;
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-muted: #f9fafb;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #f3f4f6;
+  --color-accent-foreground: #1f2937;
+  --color-border: #e5e7eb;
+  --color-ring: #0ea5e9;
+  --color-input: #e5e7eb;
+}
+
+/* 覆盖Skeleton样式，确保在Storybook中正确展示 */
+[data-slot='skeleton'] {
+  @apply bg-gray-200 animate-pulse rounded-md;
+  min-height: 16px;
+  min-width: 50px;
+}
+
+/* 覆盖Switch样式，确保在Storybook中正确展示 */
+[data-slot='switch'] {
+  @apply inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-sm transition-all outline-none;
+  @apply bg-gray-200 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+[data-slot='switch'][data-state='checked'] {
+  @apply bg-blue-500;
+}
+
+[data-slot='switch-thumb'] {
+  @apply pointer-events-none block h-4 w-4 rounded-full bg-white shadow-lg ring-0 transition-transform;
+}
+
+[data-slot='switch-thumb'][data-state='checked'] {
+  transform: translateX(calc(100% - 2px));
+}
+
+[data-slot='switch-thumb'][data-state='unchecked'] {
+  transform: translateX(0);
+}

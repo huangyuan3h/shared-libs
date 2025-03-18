@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './tailwind.css';
 import { ThemeProvider } from '@shared-libs/ui';
+
+import '../src/styles/global.css';
 
 const withThemeProvider = (Story: React.ComponentType, context: any) => {
   const selectedTheme = context.globals.theme;
