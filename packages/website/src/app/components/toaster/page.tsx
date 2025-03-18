@@ -1,11 +1,11 @@
 'use client';
 
-import { Button, Toaster, CodeBlock } from '@shared-libs/ui';
-import { toast } from 'sonner';
+import { Button, Toaster, toast, CodeBlock } from '@shared-libs/ui';
 
 export default function ToasterPage() {
   return (
     <div className="space-y-8">
+      <Toaster />
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">提示条 (Toaster)</h1>
         <p className="text-muted-foreground">
@@ -182,7 +182,6 @@ function Page() {
           </CodeBlock>
         </div>
       </div>
-      <Toaster />
     </div>
   );
 }
