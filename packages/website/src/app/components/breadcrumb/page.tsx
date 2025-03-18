@@ -2,12 +2,13 @@
 
 import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
+  CodeBlock,
 } from '@shared-libs/ui';
 
 export default function BreadcrumbDemo() {
@@ -16,7 +17,7 @@ export default function BreadcrumbDemo() {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">面包屑 (Breadcrumb)</h1>
         <p className="text-muted-foreground">
-          面包屑导航组件用于显示当前页面在网站层次结构中的位置，帮助用户了解他们的位置并提供导航选项。
+          面包屑组件用于在网站的层次结构中显示当前页面的位置，帮助用户了解他们在网站中的位置并提供导航选项。
         </p>
       </div>
 
@@ -70,11 +71,15 @@ export default function BreadcrumbDemo() {
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">首页</BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator>•</BreadcrumbSeparator>
+              <BreadcrumbSeparator className="text-primary">
+                &gt;
+              </BreadcrumbSeparator>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/components">组件</BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator>•</BreadcrumbSeparator>
+              <BreadcrumbSeparator className="text-primary">
+                &gt;
+              </BreadcrumbSeparator>
               <BreadcrumbItem>
                 <BreadcrumbPage>面包屑</BreadcrumbPage>
               </BreadcrumbItem>
@@ -91,23 +96,17 @@ export default function BreadcrumbDemo() {
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products">产品</BreadcrumbLink>
+                <BreadcrumbLink href="/components">组件</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products/electronics">
-                  电子产品
+                <BreadcrumbLink href="/components/navigation">
+                  导航
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/products/electronics/smartphones">
-                  智能手机
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>iPhone 15</BreadcrumbPage>
+                <BreadcrumbPage>面包屑</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -115,45 +114,36 @@ export default function BreadcrumbDemo() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import {
+          <CodeBlock>
+            {`import {
   Breadcrumb,
-  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@shared-libs/ui';
 
-// 基本用法
-<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">首页</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/components">组件</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>面包屑</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>
-
-// 自定义分隔符
-<BreadcrumbSeparator>•</BreadcrumbSeparator>
-
-// 与Next.js结合使用
-import Link from 'next/link';
-
-<BreadcrumbLink asChild>
-  <Link href="/">首页</Link>
-</BreadcrumbLink>`}
-            </pre>
-          </div>
+export default function MyBreadcrumb() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">首页</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/components">组件</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>面包屑</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}`}
+          </CodeBlock>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { Textarea, Label } from '@shared-libs/ui';
+import { Textarea, Label, Button, Input, CodeBlock } from '@shared-libs/ui';
 
 export default function TextareaPage() {
   return (
@@ -21,20 +21,18 @@ export default function TextareaPage() {
         <div>
           <h2 className="text-xl font-semibold mb-3">带标签</h2>
           <div className="grid w-full gap-1.5">
-            <Label htmlFor="message">留言</Label>
-            <Textarea id="message" placeholder="请输入您的留言..." />
+            <Label htmlFor="message">消息</Label>
+            <Textarea id="message" placeholder="请输入您的消息..." />
           </div>
         </div>
 
         <div>
           <h2 className="text-xl font-semibold mb-3">禁用状态</h2>
           <div className="grid w-full gap-1.5">
-            <Label htmlFor="disabled-message" className="text-muted-foreground">
-              禁用状态
-            </Label>
+            <Label htmlFor="disabled-textarea">禁用消息框</Label>
             <Textarea
-              id="disabled-message"
-              placeholder="此文本区域已禁用"
+              id="disabled-textarea"
+              placeholder="禁用状态..."
               disabled
             />
           </div>
@@ -43,28 +41,28 @@ export default function TextareaPage() {
         <div>
           <h2 className="text-xl font-semibold mb-3">不同尺寸</h2>
           <div className="grid w-full gap-4">
-            <div className="grid gap-1.5">
+            <div className="grid w-full gap-1.5">
               <Label htmlFor="small">小尺寸</Label>
               <Textarea
                 id="small"
-                placeholder="小尺寸文本区域"
                 className="min-h-[80px]"
+                placeholder="小尺寸文本域..."
               />
             </div>
-            <div className="grid gap-1.5">
+            <div className="grid w-full gap-1.5">
               <Label htmlFor="medium">中等尺寸</Label>
               <Textarea
                 id="medium"
-                placeholder="中等尺寸文本区域"
                 className="min-h-[120px]"
+                placeholder="中等尺寸文本域..."
               />
             </div>
-            <div className="grid gap-1.5">
+            <div className="grid w-full gap-1.5">
               <Label htmlFor="large">大尺寸</Label>
               <Textarea
                 id="large"
-                placeholder="大尺寸文本区域"
                 className="min-h-[160px]"
+                placeholder="大尺寸文本域..."
               />
             </div>
           </div>
@@ -72,70 +70,78 @@ export default function TextareaPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">表单示例</h2>
-          <form className="w-full max-w-md space-y-4">
-            <div className="grid gap-1.5">
+          <form className="space-y-4 max-w-md">
+            <div className="grid w-full gap-1.5">
               <Label htmlFor="name">姓名</Label>
-              <input
-                id="name"
-                type="text"
-                placeholder="请输入您的姓名"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              />
+              <Input id="name" placeholder="请输入您的姓名" />
             </div>
-            <div className="grid gap-1.5">
+            <div className="grid w-full gap-1.5">
               <Label htmlFor="email">电子邮箱</Label>
-              <input
-                id="email"
-                type="email"
-                placeholder="请输入您的电子邮箱"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-              />
+              <Input id="email" type="email" placeholder="请输入您的电子邮箱" />
             </div>
-            <div className="grid gap-1.5">
+            <div className="grid w-full gap-1.5">
               <Label htmlFor="feedback">反馈</Label>
               <Textarea
                 id="feedback"
-                placeholder="请输入您的反馈..."
+                placeholder="请输入您的反馈或建议..."
                 className="min-h-[120px]"
               />
             </div>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-            >
-              提交反馈
-            </button>
+            <Button type="submit">提交反馈</Button>
           </form>
         </div>
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Textarea, Label } from '@shared-libs/ui';
+          <CodeBlock>
+            {`import { Textarea, Label, Input, Button } from '@shared-libs/ui';
 
 // 基本用法
 <Textarea placeholder="请输入内容..." />
 
 // 带标签
 <div className="grid w-full gap-1.5">
-  <Label htmlFor="message">留言</Label>
-  <Textarea id="message" placeholder="请输入您的留言..." />
+  <Label htmlFor="message">消息</Label>
+  <Textarea id="message" placeholder="请输入您的消息..." />
 </div>
 
 // 禁用状态
-<Textarea disabled placeholder="此文本区域已禁用" />
+<Textarea 
+  placeholder="禁用状态..." 
+  disabled 
+/>
 
 // 自定义尺寸
-<Textarea className="min-h-[160px]" placeholder="大尺寸文本区域" />
-
-// 监听输入变化
 <Textarea 
-  onChange={(e) => console.log(e.target.value)} 
-  placeholder="请输入内容..."
+  className="min-h-[120px]" 
+  placeholder="自定义高度..." 
+/>
+
+// 表单示例
+<form className="space-y-4">
+  <div className="grid w-full gap-1.5">
+    <Label htmlFor="name">姓名</Label>
+    <Input id="name" placeholder="请输入您的姓名" />
+  </div>
+  <div className="grid w-full gap-1.5">
+    <Label htmlFor="feedback">反馈</Label>
+    <Textarea
+      id="feedback"
+      placeholder="请输入您的反馈或建议..."
+      className="min-h-[120px]"
+    />
+  </div>
+  <Button type="submit">提交反馈</Button>
+</form>
+
+// 监听变化
+<Textarea 
+  placeholder="请输入内容..." 
+  onChange={(e) => {
+    console.log(e.target.value);
+  }}
 />`}
-            </pre>
-          </div>
+          </CodeBlock>
         </div>
       </div>
     </div>

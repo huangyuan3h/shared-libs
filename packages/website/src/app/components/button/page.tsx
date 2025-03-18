@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@shared-libs/ui';
+import { Button, CodeBlock } from '@shared-libs/ui';
 
 export default function ButtonPage() {
   return (
@@ -64,9 +64,8 @@ export default function ButtonPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Button } from '@shared-libs/ui';
+          <CodeBlock>
+            {`import { Button } from '@shared-libs/ui';
 
 // 基本用法
 <Button>按钮文本</Button>
@@ -86,8 +85,7 @@ export default function ButtonPage() {
 <Button asChild>
   <Link href="/some-page">链接按钮</Link>
 </Button>`}
-            </pre>
-          </div>
+          </CodeBlock>
         </div>
       </div>
     </div>

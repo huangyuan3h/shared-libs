@@ -1,6 +1,6 @@
 'use client';
 
-import { Switch, Label } from '@shared-libs/ui';
+import { Switch, Label, Button, CodeBlock } from '@shared-libs/ui';
 
 export default function SwitchPage() {
   return (
@@ -8,7 +8,7 @@ export default function SwitchPage() {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">开关 (Switch)</h1>
         <p className="text-muted-foreground">
-          开关组件用于切换单个设置的开启或关闭状态，是复选框的替代方案。
+          开关组件用于表示两种状态（打开/关闭）之间的切换，是复选框的替代方案，常用于设置页面。
         </p>
       </div>
 
@@ -25,7 +25,7 @@ export default function SwitchPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">禁用状态</h2>
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col gap-2">
             <Switch disabled />
             <Switch disabled defaultChecked />
           </div>
@@ -41,36 +41,32 @@ export default function SwitchPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">表单示例</h2>
-          <form className="w-full max-w-md space-y-6">
+          <form className="space-y-6 max-w-md">
             <div className="space-y-4">
-              <h3 className="text-lg font-medium">通知设置</h3>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="email-notifications">电子邮件通知</Label>
-                <Switch id="email-notifications" defaultChecked />
-              </div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="push-notifications">推送通知</Label>
-                <Switch id="push-notifications" />
-              </div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="marketing-emails">营销邮件</Label>
-                <Switch id="marketing-emails" />
+              <h4 className="text-base font-medium">通知设置</h4>
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="email-notifications">电子邮件通知</Label>
+                  <Switch id="email-notifications" defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="push-notifications">推送通知</Label>
+                  <Switch id="push-notifications" defaultChecked />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="marketing-emails">营销邮件</Label>
+                  <Switch id="marketing-emails" />
+                </div>
               </div>
             </div>
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-            >
-              保存设置
-            </button>
+            <Button type="button">保存设置</Button>
           </form>
         </div>
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Switch, Label } from '@shared-libs/ui';
+          <CodeBlock>
+            {`import { Switch, Label, Button } from '@shared-libs/ui';
 
 // 基本用法
 <Switch />
@@ -88,12 +84,31 @@ export default function SwitchPage() {
   <Label htmlFor="airplane-mode">飞行模式</Label>
 </div>
 
+// 表单示例
+<form className="space-y-6">
+  <div className="space-y-4">
+    <h4 className="text-base font-medium">通知设置</h4>
+    <div className="flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <Label htmlFor="email-notifications">电子邮件通知</Label>
+        <Switch id="email-notifications" defaultChecked />
+      </div>
+      <div className="flex items-center justify-between">
+        <Label htmlFor="push-notifications">推送通知</Label>
+        <Switch id="push-notifications" defaultChecked />
+      </div>
+    </div>
+  </div>
+  <Button type="submit">保存设置</Button>
+</form>
+
 // 监听状态变化
 <Switch 
-  onCheckedChange={(checked) => console.log(checked)} 
+  onCheckedChange={(checked) => {
+    console.log(checked); 
+  }}
 />`}
-            </pre>
-          </div>
+          </CodeBlock>
         </div>
       </div>
     </div>

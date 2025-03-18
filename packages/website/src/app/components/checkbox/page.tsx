@@ -1,6 +1,6 @@
 'use client';
 
-import { Checkbox } from '@shared-libs/ui';
+import { Checkbox, CodeBlock } from '@shared-libs/ui';
 
 export default function CheckboxPage() {
   return (
@@ -114,9 +114,8 @@ export default function CheckboxPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Checkbox } from '@shared-libs/ui';
+          <CodeBlock>
+            {`import { Checkbox } from '@shared-libs/ui';
 
 // 基本用法
 <div className="flex items-center space-x-2">
@@ -140,8 +139,7 @@ export default function CheckboxPage() {
   id="onChange" 
   onCheckedChange={(checked) => console.log(checked)} 
 />`}
-            </pre>
-          </div>
+          </CodeBlock>
         </div>
       </div>
     </div>

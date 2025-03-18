@@ -1,154 +1,188 @@
 'use client';
 
-import { Button, Toaster, toast } from '@shared-libs/ui';
+import { Button, Toaster, CodeBlock } from '@shared-libs/ui';
+import { toast } from 'sonner';
 
 export default function ToasterPage() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold">提示框 (Toaster)</h1>
+        <h1 className="text-3xl font-bold">提示条 (Toaster)</h1>
         <p className="text-muted-foreground">
-          提示框组件用于显示简短的、非阻塞性的通知消息，如操作成功、错误提示或警告信息。
+          提示条组件用于显示简短的、非阻塞性的消息通知，用于操作反馈、状态更新和信息通知。
         </p>
       </div>
-
-      <Toaster />
 
       <div className="space-y-6">
         <div>
           <h2 className="text-xl font-semibold mb-3">基础示例</h2>
-          <div className="flex flex-wrap gap-3">
-            <Button onClick={() => toast('这是一条基本的提示消息')}>
-              显示提示
-            </Button>
-          </div>
+          <Button
+            onClick={() => {
+              toast('这是一条普通提示', {
+                description: '提示的详细描述信息',
+              });
+            }}
+          >
+            显示提示
+          </Button>
         </div>
 
         <div>
           <h2 className="text-xl font-semibold mb-3">不同类型</h2>
-          <div className="flex flex-wrap gap-3">
-            <Button onClick={() => toast.success('操作已成功完成')}>
-              成功提示
+          <div className="flex flex-wrap gap-2">
+            <Button
+              onClick={() => {
+                toast('默认提示', {
+                  description: '这是一条默认类型的提示',
+                });
+              }}
+            >
+              默认
             </Button>
             <Button
               variant="destructive"
-              onClick={() => toast.error('发生了一个错误')}
+              onClick={() => {
+                toast.error('错误提示', {
+                  description: '这是一条错误类型的提示',
+                });
+              }}
             >
-              错误提示
+              错误
             </Button>
-            <Button onClick={() => toast.warning('请注意')}>警告提示</Button>
-            <Button onClick={() => toast.info('提示信息')}>信息提示</Button>
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold mb-3">带描述的提示</h2>
-          <div className="flex flex-wrap gap-3">
             <Button
-              onClick={() =>
-                toast('新消息', {
-                  description: '您有一条新消息需要查看',
-                })
-              }
+              onClick={() => {
+                toast.success('成功提示', {
+                  description: '这是一条成功类型的提示',
+                });
+              }}
             >
-              带描述的提示
+              成功
             </Button>
           </div>
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold mb-3">带操作按钮</h2>
-          <div className="flex flex-wrap gap-3">
-            <Button
-              onClick={() =>
-                toast('邮件已发送', {
-                  description: '您的邮件已成功发送给收件人',
-                  action: {
-                    label: '撤回',
-                    onClick: () => toast('邮件已撤回'),
-                  },
-                })
-              }
-            >
-              带操作按钮
-            </Button>
-          </div>
+          <h2 className="text-xl font-semibold mb-3">自定义操作</h2>
+          <Button
+            onClick={() => {
+              toast('提示', {
+                description: '您的修改尚未保存。',
+                action: {
+                  label: '立即保存',
+                  onClick: () => console.log('保存修改'),
+                },
+              });
+            }}
+          >
+            显示带操作的提示
+          </Button>
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold mb-3">自定义持续时间</h2>
-          <div className="flex flex-wrap gap-3">
+          <h2 className="text-xl font-semibold mb-3">不同位置</h2>
+          <div className="flex flex-wrap gap-2">
             <Button
-              onClick={() =>
-                toast('短暂提示', {
-                  description: '这条提示将在3秒后消失',
-                  duration: 3000,
-                })
-              }
+              onClick={() => {
+                toast('顶部居中提示', {
+                  description: '这是一条顶部居中显示的提示',
+                  position: 'top-center',
+                });
+              }}
             >
-              短暂提示 (3秒)
+              顶部居中
             </Button>
             <Button
-              onClick={() =>
-                toast('持久提示', {
-                  description: '这条提示将持续显示直到手动关闭',
-                  duration: Infinity,
-                })
-              }
+              onClick={() => {
+                toast('顶部右侧提示', {
+                  description: '这是一条顶部右侧显示的提示',
+                  position: 'top-right',
+                });
+              }}
             >
-              持久提示
+              顶部右侧
+            </Button>
+            <Button
+              onClick={() => {
+                toast('底部提示', {
+                  description: '这是一条底部显示的提示',
+                  position: 'bottom-center',
+                });
+              }}
+            >
+              底部
             </Button>
           </div>
         </div>
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Button, Toaster } from '@shared-libs/ui';
+          <CodeBlock>
+            {`import { Toaster } from '@shared-libs/ui';
 import { toast } from 'sonner';
 
-function MyComponent() {
-  const showToast = () => {
-    toast('这是一条默认提示');
-  };
-
-  const showSuccessToast = () => {
-    toast.success('操作成功');
-  };
-
-  const showErrorToast = () => {
-    toast.error('操作失败，请重试');
-  };
-
-  const showToastWithAction = () => {
-    toast('邮件已发送', {
-      description: '您的邮件已成功发送给收件人',
-      action: {
-        label: '撤回',
-        onClick: () => toast('邮件已撤回'),
-      },
-    });
-  };
-
+// 1. 在布局组件中添加 Toaster 组件
+// layout.tsx
+export default function RootLayout({ children }) {
   return (
-    <>
-      <Toaster />
-      <div className="space-y-4">
-        <Button onClick={showToast}>显示默认提示</Button>
-        <Button onClick={showSuccessToast}>显示成功提示</Button>
-        <Button variant="destructive" onClick={showErrorToast}>
-          显示错误提示
-        </Button>
-        <Button onClick={showToastWithAction}>显示带操作的提示</Button>
-      </div>
-    </>
+    <html lang="zh-CN">
+      <body>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  );
+}
+
+// 2. 在组件中使用 toast 函数
+// page.tsx
+'use client';
+import { toast } from 'sonner';
+import { Button } from '@shared-libs/ui';
+
+function Page() {
+  return (
+    <div>
+      <Button
+        onClick={() => {
+          toast('成功', {
+            description: '您的设置已保存',
+          });
+        }}
+      >
+        保存设置
+      </Button>
+      
+      <Button
+        variant="destructive"
+        onClick={() => {
+          toast.error('错误', {
+            description: '保存过程中发生错误',
+          });
+        }}
+      >
+        模拟错误
+      </Button>
+      
+      <Button
+        onClick={() => {
+          toast('提示', {
+            description: '有未保存的变更',
+            action: {
+              label: '保存',
+              onClick: () => console.log('保存操作')
+            },
+          });
+        }}
+      >
+        带操作的提示
+      </Button>
+    </div>
   );
 }`}
-            </pre>
-          </div>
+          </CodeBlock>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

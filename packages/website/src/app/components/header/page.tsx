@@ -1,6 +1,13 @@
 'use client';
 
-import { Header, Button } from '@shared-libs/ui';
+import {
+  Header,
+  Button,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  CodeBlock,
+} from '@shared-libs/ui';
 
 export default function HeaderPage() {
   return (
@@ -8,29 +15,45 @@ export default function HeaderPage() {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">页头 (Header)</h1>
         <p className="text-muted-foreground">
-          页头组件用于网站或应用的顶部导航，提供品牌标识、导航菜单和操作按钮。
+          页头组件用于展示网站或应用的顶部导航栏，包含品牌标识、导航链接和用户操作等元素。
         </p>
       </div>
 
       <div className="space-y-6">
         <div>
           <h2 className="text-xl font-semibold mb-3">基础示例</h2>
-          <div className="border rounded-lg overflow-hidden">
+          <div className="border rounded overflow-hidden">
             <Header
-              leftContent={<div className="font-bold">网站名称</div>}
+              leftContent={
+                <div className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-6 w-6 mr-2"
+                  >
+                    <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+                  </svg>
+                  <span className="font-bold">品牌名称</span>
+                </div>
+              }
               menu={
-                <nav className="flex space-x-4">
-                  <a href="#" className="hover:text-primary">
+                <nav className="flex md:flex-row flex-col md:items-center md:space-x-4 space-y-2 md:space-y-0">
+                  <a href="#" className="font-medium text-primary">
                     首页
                   </a>
-                  <a href="#" className="hover:text-primary">
-                    关于
+                  <a href="#" className="font-medium hover:text-primary">
+                    产品
                   </a>
-                  <a href="#" className="hover:text-primary">
+                  <a href="#" className="font-medium hover:text-primary">
                     服务
                   </a>
-                  <a href="#" className="hover:text-primary">
-                    联系我们
+                  <a href="#" className="font-medium hover:text-primary">
+                    关于我们
                   </a>
                 </nav>
               }
@@ -40,54 +63,50 @@ export default function HeaderPage() {
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold mb-3">只有左侧内容</h2>
-          <div className="border rounded-lg overflow-hidden">
-            <Header leftContent={<div className="font-bold">网站名称</div>} />
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold mb-3">只有右侧内容</h2>
-          <div className="border rounded-lg overflow-hidden">
+          <h2 className="text-xl font-semibold mb-3">带用户头像</h2>
+          <div className="border rounded overflow-hidden">
             <Header
-              rightContent={
-                <div className="flex space-x-2">
-                  <Button size="sm" variant="outline">
-                    注册
-                  </Button>
-                  <Button size="sm">登录</Button>
+              leftContent={
+                <div className="flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="h-6 w-6 mr-2"
+                  >
+                    <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+                  </svg>
+                  <span className="font-bold">品牌名称</span>
                 </div>
               }
-            />
-          </div>
-        </div>
-
-        <div>
-          <h2 className="text-xl font-semibold mb-3">自定义样式</h2>
-          <div className="border rounded-lg overflow-hidden">
-            <Header
-              className="bg-primary text-primary-foreground"
-              leftContent={<div className="font-bold">网站名称</div>}
               menu={
-                <nav className="flex space-x-4">
-                  <a href="#" className="hover:text-white/70">
+                <nav className="flex md:flex-row flex-col md:items-center md:space-x-4 space-y-2 md:space-y-0">
+                  <a href="#" className="font-medium text-primary">
                     首页
                   </a>
-                  <a href="#" className="hover:text-white/70">
-                    关于
+                  <a href="#" className="font-medium hover:text-primary">
+                    产品
                   </a>
-                  <a href="#" className="hover:text-white/70">
+                  <a href="#" className="font-medium hover:text-primary">
                     服务
                   </a>
-                  <a href="#" className="hover:text-white/70">
-                    联系我们
+                  <a href="#" className="font-medium hover:text-primary">
+                    关于我们
                   </a>
                 </nav>
               }
               rightContent={
-                <Button size="sm" variant="secondary">
-                  登录
-                </Button>
+                <Avatar className="size-8">
+                  <AvatarImage
+                    src="https://github.com/shadcn.png"
+                    alt="@shadcn"
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
               }
             />
           </div>
@@ -95,43 +114,42 @@ export default function HeaderPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Header, Button } from '@shared-libs/ui';
-import Link from 'next/link';
+          <CodeBlock>
+            {`import { Header, Button } from '@shared-libs/ui';
 
-// 基本用法
-<Header
-  leftContent={<div className="font-bold">网站名称</div>}
-  menu={
-    <nav className="flex space-x-4">
-      <a href="#">首页</a>
-      <a href="#">关于</a>
-    </nav>
-  }
-  rightContent={<Button size="sm">登录</Button>}
-/>
-
-// 自定义样式
-<Header
-  className="bg-primary text-primary-foreground"
-  leftContent={<div className="font-bold">网站名称</div>}
-  rightContent={<Button size="sm" variant="secondary">登录</Button>}
-/>
-
-// 与Next.js结合使用
-<Header
-  leftContent={<div className="font-bold">网站名称</div>}
-  menu={
-    <nav className="flex space-x-4">
-      <Link href="/" className="hover:text-primary">首页</Link>
-      <Link href="/about" className="hover:text-primary">关于</Link>
-    </nav>
-  }
-  rightContent={<Button size="sm">登录</Button>}
-/>`}
-            </pre>
-          </div>
+export default function MyHeader() {
+  return (
+    <Header
+      leftContent={
+        <div className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="h-6 w-6 mr-2"
+          >
+            <path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" />
+          </svg>
+          <span className="font-bold">品牌名称</span>
+        </div>
+      }
+      menu={
+        <nav className="flex md:flex-row flex-col md:items-center md:space-x-4 space-y-2 md:space-y-0">
+          <a href="/" className="font-medium text-primary">首页</a>
+          <a href="/products" className="font-medium hover:text-primary">产品</a>
+          <a href="/services" className="font-medium hover:text-primary">服务</a>
+          <a href="/about" className="font-medium hover:text-primary">关于我们</a>
+        </nav>
+      }
+      rightContent={<Button size="sm">登录</Button>}
+    />
+  );
+}`}
+          </CodeBlock>
         </div>
       </div>
     </div>

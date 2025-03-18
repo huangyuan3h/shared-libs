@@ -1,6 +1,11 @@
 'use client';
 
-import { Avatar, AvatarImage, AvatarFallback } from '@shared-libs/ui';
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+  CodeBlock,
+} from '@shared-libs/ui';
 
 export default function AvatarPage() {
   return (
@@ -79,9 +84,8 @@ export default function AvatarPage() {
 
         <div>
           <h2 className="text-xl font-semibold mb-3">用法示例</h2>
-          <div className="p-4 border rounded bg-card text-card-foreground">
-            <pre className="text-sm">
-              {`import { Avatar, AvatarImage, AvatarFallback } from '@shared-libs/ui';
+          <CodeBlock>
+            {`import { Avatar, AvatarImage, AvatarFallback } from '@shared-libs/ui';
 
 // 基本用法
 <Avatar>
@@ -99,8 +103,7 @@ export default function AvatarPage() {
 <Avatar className="bg-blue-500 text-white">
   <AvatarFallback>BL</AvatarFallback>
 </Avatar>`}
-            </pre>
-          </div>
+          </CodeBlock>
         </div>
       </div>
     </div>
