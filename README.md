@@ -1,92 +1,6 @@
 # IT and Tea shard libs
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
-
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
-
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
-
-## Finish your CI setup
-
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/icPbzFoiRf)
-
-## Generate a library
-
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
-```
-
-## Run tasks
-
-To build the library use:
-
-```sh
-npx nx build pkg1
-```
-
-To run any task with Nx use:
-
-```sh
-npx nx <target> <project-name>
-```
-
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
-
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Versioning and releasing
-
-To version and release the library use
-
-```
-npx nx release
-```
-
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](hhttps://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Keep TypeScript project references up to date
-
-Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
-
-To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
-
-```sh
-npx nx sync
-```
-
-You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
-
-```sh
-npx nx sync:check
-```
-
-[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+本仓库包含共享的 UI 组件库、相关文档及展示网站。
 
 # Shared UI Components Library
 
@@ -160,6 +74,36 @@ shared-libs/
   - Button：多样式按钮组件，支持不同的变体和尺寸
   - Theme：主题系统组件，支持动态切换主题
 
+#### 样式集成
+
+`@shared-libs/ui` 组件依赖 Tailwind CSS 的原子类来实现样式，但 **库本身并不直接导出 CSS 文件**。因此，在使用此 UI 库的项目中，你需要：
+
+1.  **配置 Tailwind CSS**:
+    - 确保你的项目已安装并配置了 Tailwind CSS。
+    - 在你的 `tailwind.config.js` (或 `.ts`) 文件的 `content` 数组中，包含指向 `@shared-libs/ui` 组件源文件的路径，以便 Tailwind 可以扫描这些文件中的类。例如：
+      ```js
+      // tailwind.config.js
+      module.exports = {
+        // ... 其他配置
+        content: [
+          './src/**/*.{js,ts,jsx,tsx,mdx}', // 你自己项目的源文件
+          '../../packages/ui/src/**/*.{js,ts,jsx,tsx}', // 指向 UI 库源文件 (路径可能需要根据你的项目结构调整)
+        ],
+        // ... 其他配置
+      };
+      ```
+2.  **引入 Tailwind 指令**:
+    - 在你的全局 CSS 文件（例如 `src/app/globals.css` 或 `src/index.css`）中，引入 Tailwind 的基础、组件和工具层：
+      ```css
+      @tailwind base;
+      @tailwind components;
+      @tailwind utilities;
+      ```
+3.  **（可选）定义主题变量**:
+    - 如果你希望使用库提供的主题功能或自定义主题，需要在全局 CSS 中定义相应的 CSS 变量。你可以参考 `packages/website/src/app/globals.css` 文件中的 `:root` 和 `.dark` 选择器下的变量定义。
+
+你可以参考 `packages/website` 项目中的 `tailwind.config.js` 和 `src/app/globals.css` 文件作为配置示例。
+
 ### @shared-libs/storybook
 
 Storybook 文档项目，用于展示和测试组件。
@@ -188,7 +132,7 @@ Storybook 文档项目，用于展示和测试组件。
 - **构建工具**：NX
 - **包管理**：PNPM
 - **类型检查**：TypeScript
-- **Node 版本**：v20.11.1（通过 .nvmrc 锁定）
+- **Node 版本**：v22.14.0（通过 .nvmrc 锁定）
 
 ## 开发指南
 
@@ -200,7 +144,7 @@ Storybook 文档项目，用于展示和测试组件。
 # 如果你使用 nvm
 nvm use
 
-# 或者手动安装 Node.js v20.11.1
+# 或者手动安装 Node.js v22.14.0
 ```
 
 安装依赖：
@@ -212,7 +156,7 @@ pnpm install
 ### 常用命令
 
 ```bash
-# 启动所有开发服务
+# 启动所有开发服务 (通常会同时启动 Storybook 和展示网站)
 pnpm dev
 
 # 启动 Storybook
@@ -237,13 +181,6 @@ pnpm lint
 2. 在 `packages/ui/src/components/index.ts` 中导出组件
 3. 在 `packages/storybook/src/stories` 中创建对应的故事文件
 4. 在展示网站中使用新组件
-
-## 贡献指南
-
-1. 确保使用正确的 Node.js 版本（v20.11.1）
-2. 遵循项目的代码风格和最佳实践
-3. 为新功能编写测试和文档
-4. 提交前运行 lint 和测试
 
 ## 许可证
 
